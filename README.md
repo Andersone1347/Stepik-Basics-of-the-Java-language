@@ -150,5 +150,75 @@ class Main {
     }}
 ```
 
-### 2.2 Операторы цикла
+### 2.3 Вложенные циклы
 
+Задача
+
+Пользователь вводит высоту треугольника. Нарисовать треугольник из звездочек, как показано в примере теста. 
+
+Если вводятся некорректные данные (высота  <= 0), то вывести "ERROR".
+
+Тестовые данные
+Sample Input:
+
+5
+Sample Output:
+
+*****
+ ****
+  ***
+   **
+    *
+
+решение
+```
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        if(a<=0){
+            System.out.println("ERROR");
+        }
+        for (int i = 0; i < a; i++) {
+            for (int j = a; j > i; j--) {
+                System.out.print("*");
+            }
+            System.out.println();
+            for (int k = 0; k <= i; k++) {
+                System.out.print(" ");
+            }
+        }
+    }
+}
+```
+Решение автора курса
+
+```
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int height = scan.nextInt();
+        if (height <= 0) {
+            System.out.println("ERROR");
+            return;
+        }
+        int probel = 0; //количество пробелов в первой строке
+        int zvezd = height; //количество звезд в первой строке
+        for (int i = 1; i <= height; i++){
+            for (int j = 1; j <= probel; j++) { //выводим пробелы
+                System.out.print(' ');
+            }
+            for (int j = 1; j <= zvezd; j++) { //выводим звезды
+                System.out.print('*');
+            }
+            System.out.println(); //переводим курсор
+            probel++; //в следующей строке будет пробелов на 1 больше
+            zvezd--; //а звезд на 1 меньше
+        }
+    }
+}
+```
