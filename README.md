@@ -222,3 +222,40 @@ public class Main {
     }
 }
 ```
+
+задача
+
+Пользователь вводит ширину треугольника (от 1 до 9). Изобразить треугольник числами, как показано в примере теста.
+
+Тестовые данные
+Sample Input:
+
+5
+Sample Output:
+
+55555
+4444
+333
+22
+1
+
+решение
+```
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+
+        for (int i = a; i >=1; i--) {
+            for (int j = 1; j <=i; j++) {
+                System.out.print(i+" ");
+            }
+            System.out.println();
+        }
+        }
+    }
+
+```
+
