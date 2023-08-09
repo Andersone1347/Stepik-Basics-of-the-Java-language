@@ -259,3 +259,87 @@ public class Main {
 
 ```
 
+Задача
+```
+Пользователь вводит два целых числа (границы интервала). Границы могут быть введены некорректно (первое число больше второго). В этом случае нужно границы переставить местами.
+
+Найти в данном интервале первое число с максимальной суммой цифр. Для отрицательного числа при расчете суммы цифр знак не учитывается. Например, сумма цифр -324 равна 9.
+
+Тестовые данные
+Sample Input 1:
+
+15 22
+Sample Output 1:
+
+19
+Sample Input 2:
+
+-16 5
+Sample Output 2:
+
+-9
+```
+
+Решение
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int a = scan.nextInt();
+        int b = scan.nextInt();
+        int maxsum = 1;
+        int chislosum = 0;
+        if (a > b) {
+            int c = a;
+            a = b;
+            b = c;
+        }
+        for (int chislo = a; chislo <= b; chislo++) {
+            int m = Math.abs((chislo % 10) + (chislo / 10));
+            if (m > maxsum) {
+                maxsum = m;
+                chislosum = chislo;
+            }
+        }
+        System.out.println(chislosum);
+    }
+}
+```
+
+РЕшение автора
+```
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int a = scan.nextInt();
+        int b = scan.nextInt();
+        if (a > b) {
+            int tmp = a;
+            a = b;
+            b = tmp;
+        }
+        int max = 0;
+        int numberMax = 0;
+        while (a <= b) {
+            //находим сумму цифр a ->sum
+            int sum = 0;
+            int tmp = Math.abs(a); //неотрицательная копия
+            while (tmp > 0) {
+                sum += tmp % 10; //последнюю цифру к сумме
+                tmp /= 10; //избавляемся от последней цифры
+            }
+            //сравниваем ее с максимальной
+            if (sum > max) {
+                max = sum;
+                numberMax = a;
+            }
+            a++; //переходим к следующему числу диапазона
+        }
+        System.out.println(numberMax);
+    }
+}
+```
