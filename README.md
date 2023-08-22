@@ -441,3 +441,34 @@ i=4 j=1
 i=4 j=2 
 i=4 j=3 
 ```
+
+### 3.1 Методы в Java
+
+Бональный метод c doble
+```
+class main{
+    public static void main(String[] args) {
+        double a= 13.47, b = 1.347, c = 134.7;
+        double result = mixi(a,b,c);
+        System.out.println(result);
+    }
+    public static double mixi(double x,double y, double z){
+        double max = x>y ? x : y;
+        max = z>max ? z : max;
+        return max;
+    }
+}
+```
+c SB
+```
+class main{
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder("data");
+        mixi(sb);
+        System.out.println(sb);
+    }
+    public static void mixi(StringBuilder s){
+        s.append(".txt");
+    }
+}
+```
