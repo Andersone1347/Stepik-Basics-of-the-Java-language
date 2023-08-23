@@ -472,3 +472,258 @@ class main{
     }
 }
 ```
+
+
+**Задание** : Пользователь вводит границы диапозона целыч не отрицательных чисел, нужно вевести из этого диапозона число с макс. суммой цифр.
+  Если таких чисел 2 то , первое из них.
+```
+package New;
+
+import java.util.Scanner;
+
+public class Ex {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        int res = mixi(a,b);
+        System.out.println(res);
+    }
+
+    public static int mixi(int x,int y) {
+        x = Math.min(x, y);
+        y = Math.max(x, y);
+
+        int max = x;
+        int mSum = sum(x);
+        x++;
+        while (x<=y){
+            int suma = sum(x);
+            if (suma > mSum){
+                mSum=suma;
+                max=x;
+            }
+            x++;
+        }
+        return max;
+    }
+
+    public static int sum(int zero){
+        int sum =0;
+        while (zero != 0){
+            sum += zero %10;
+            zero/=10;
+        }
+        return sum;
+    }
+}
+
+```
+
+### Задача
+
+Напишите статический метод isSimple(), который возвращает true, если аргумент является простым числом, и false - в противном случае.
+
+Простым называется целое положительное число, которое не имеет других делителей, кроме единицы и себя самого.
+
+Отрицательные числа не могут быть простыми (поэтому функция должна возвращать false). Простыми также не являются числа 0 и 1.
+
+В методе main продемонстрировано использование метода isSimple(). Этот код менять нельзя!
+
+Тестовые данные
+Номер теста	Входные данные	Выходные данные
+1	1 13 23 67 10	false true true true false
+2	-5 6 9 29 5	false false false true true
+3	127 69 -3 0 7	true false false false true
+Sample Input:
+
+1 13 23 67 10
+Sample Output:
+
+false true true true false
+
+### Решение
+Моё
+```
+import java.math.BigInteger;
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        for (int i = 0; i < 5; i++) {
+            int number = scan.nextInt();
+            isSimple(number);
+        }
+    }
+    public static int isSimple(int iteger){
+        int a = iteger;
+        BigInteger bigInteger = BigInteger.valueOf(a);
+        boolean probablePrime = bigInteger.isProbablePrime((int) Math.log(a));
+        if (a == 1 || a<0 || a == 0){
+            probablePrime = false;
+        }
+        System.out.print(probablePrime+" ");
+        return iteger;
+    }
+}
+```
+Автора курса
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        for (int i = 0; i < 5; i++) {
+            int number = scan.nextInt();
+            System.out.print(isSimple(number) + " ");
+        }
+    }
+    // put your code here
+    
+    static boolean isSimple(int n) {
+       if (n <= 0 || n == 1) {
+           return false;
+       }
+       for (int i = 2; i < n; i++) {
+           if (n % i == 0) {
+               return false;
+           }
+       }
+       return true;
+    }
+}
+```
+
+задача 
+
+Напишите статический  метод printDivider(), который выводит все делители натурального числа через пробел (включая единицу и само число). Метод не возвращает никакого значения!
+
+Пример использования этого метода в main() менять нельзя!
+
+Тестовые данные
+Sample Input:
+
+246
+Sample Output:
+
+1 2 3 6 41 82 123 246
+
+решение
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int number = scan.nextInt();
+        printDivider(number);
+    }
+    public static void printDivider(int a){
+        for (int i = 1; i <=a ; i++) {
+            if(a%i==0){
+                System.out.print(i+" ");
+            }
+        }
+    }
+}
+```
+задача 
+
+Напишите статический метод maxNumberDivider(), который в заданном диапазоне находит число с наибольшим количеством делителей.
+
+Метод main() менять нельзя!
+
+Совет: сделайте отдельный  метод, который подсчитывает количество делителей числа, а затем вызывайте его в методе maxNumberDivider().
+
+Тестовые данные
+Sample Input:
+
+530 545
+Sample Output:
+
+540
+
+решение
+моё
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int a = scan.nextInt();
+        int b = scan.nextInt();
+        int max = maxNumberDivider(a, b);
+        System.out.println(max);
+    }
+    public static int maxNumberDivider(int a,int b){
+    int max = 0;
+    int count = 0;
+        for (int i = a; i < b; i++) {
+          int h = printDivider(i);
+          if (h>count){
+              count = h;
+              max = i;
+          }
+        }
+        return max;
+    }
+
+    public static int printDivider(int a){
+        int count = 0;
+        for (int i = 1; i <=a ; i++) {
+            if(a%i==0){
+                count++;
+            }
+}
+       return count;
+    }
+}
+```
+
+автора курса
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int a = scan.nextInt();
+        int b = scan.nextInt();
+        int max = maxNumberDivider(a, b);
+        System.out.println(max);
+    }
+    // put your code here
+    static int maxNumberDivider(int a, int b) {
+        if (a > b) {
+            int tmp = a;
+            a = b;
+            b = tmp;
+        }
+        int max = a;
+        int kolMax = kolDivider(a);
+        a++;
+        while (a <= b) {
+            if (kolDivider(a) > kolMax) {
+                kolMax = kolDivider(a);
+                max = a;
+            }
+            a++;
+        }
+        return max;
+    }
+
+    static int kolDivider(int a) {
+        int kol = 0;
+        for (int i = 1; i <= a; i++) {
+            if (a % i == 0) {
+                kol++;
+            }
+        }
+        return kol;
+    }
+
+}
+```
