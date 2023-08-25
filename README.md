@@ -727,3 +727,259 @@ class Main {
 
 }
 ```
+
+Задача 
+
+Напишите две перегрузки статического  метода square() для вычисления площади прямоугольника. В одном случае в метод передаются две стороны прямоугольника, а в другом - одна сторона квадрата (все - вещественные числа).
+
+В методе main() вводится сначала целое число:
+
+1 означает, что нужно вычислить площадь квадрата. И затем следует ввод одного вещественного числа (стороны квадрата)
+2 означает, что нужно вычислить площадь прямоугольника. Затем следует ввод двух сторон прямоугольника.
+Выводимую площадь нужно представить с двумя знаками после десятичной точки.
+
+Тестовые данные
+Sample Input 1:
+
+2 4.4 3.2
+Sample Output 1:
+
+14.08
+Sample Input 2:
+
+1 5.5
+Sample Output 2:
+
+30.25
+
+решение 
+
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        double b =sc.nextDouble() ;
+        if (a == 1){
+            square(a,b);
+        }else {
+            double c =sc.nextDouble();
+            square(a,b,c);
+        }
+    }
+    static void square(int a, double b, double c ){
+           double q =b*c;
+           System.out.printf("%.2f",q);
+    }
+    static void square(int a, double b){
+
+            double q = Math.pow(b,2);
+            System.out.printf("%.2f",q);
+    }
+}
+```
+
+Задача
+```
+Напишите четыре перегрузки статического метода average(), который находит среднее арифметическое
+
+ двух вещественных чисел;
+трех вещественных чисел;
+двух целых чисел
+трех целых чисел
+В методе main() показано использование методов average() - его менять нельзя!
+
+Подумайте, можно ли сократить число перегрузок? Если да, то какие методы можно удалить?
+
+Тестовые данные
+Sample Input:
+
+3 4 8
+7.2 0.3 4.8
+Sample Output:
+
+3.50 5.00
+3.75 4.10
+```
+
+Решение
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int a = scan.nextInt();
+        int b = scan.nextInt();
+        int c = scan.nextInt();
+        double x = scan.nextDouble();
+        double y = scan.nextDouble();
+        double z = scan.nextDouble();
+        System.out.printf("%.2f %.2f\n", average(a, b), average(a, b, c));
+        System.out.printf("%.2f %.2f\n", average(x, y),average(x, y, z));
+    }
+//    public static double average(double a, double b){
+//        double q = (a+b)/2;
+//        return q;
+//    }
+
+    public static double average(double x, double y){
+        double q = (x+y)/2;
+        return q;
+    }
+    public static double average(double x, double y, double z){
+        double q = (x+y+z)/3;
+        return q;
+    }
+}
+
+/// 3 4 8
+///  7,2 0,3 4,8
+```
+
+Запись со сканера в массив и вывод его .
+
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+       Scanner sc = new Scanner(System.in);
+       int a = sc.nextInt();
+       int[] b = new int[a];
+        for (int i = 0; i < b.length ; i++) {
+            b[i] = sc.nextInt();
+        }
+
+        for(int el:b){
+            System.out.print(el+" ");
+
+        }
+       System.out.println("\n"+b.length);
+    }
+}
+
+```
+
+random       
+int
+```
+public static void main(String[] args) {
+    Scanner scan = new Scanner(System.in);
+    int[] a= new int[6];
+    long seed = scan.nextLong(); //вводим начальное значение генератора
+    Random rand = new Random(seed); //Создаем объект класса Random
+    for(int i = 0; i < a.length; i++){
+         a[i] = rand.nextInt(-5, 6); //числа от -5 до 5
+         System.out.print(a[i] + " ");
+    }
+    System.out.println();
+}
+```
+doble
+```
+ public static void main(String[] args) {
+     Scanner scan = new Scanner(System.in);
+     long seed = scan.nextLong(); //вводим начальное значение генератора
+     Random rand = new Random(seed); //Создаем объект класса Random
+     double[] b = new double[10];
+     for(int i = 0; i < b.length; i++){
+         b[i] = rand.nextDouble(10., 20.); //от 10.0 до 20.0
+         System.out.printf("%.1f ",b[i]);
+     }
+     System.out.println();
+}
+```
+
+```
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int gen = sc.nextInt();
+// Создание массива, рандом числами и вывод в консоль
+        Random r = new Random(gen);
+        int[] a = new int[n];
+        for (int i = 0; i <a.length ; i++) {
+            a[i] = r.nextInt(-10,11);
+            System.out.print(a[i]+ " ");
+        }
+        System.out.println();
+        // Сумма элементов массива
+        int sun = 0;
+        for (int el: a){
+            sun+=el;
+        }
+        System.out.println("Cумма равна:"+sun);
+        // Подсчет количества элементов в массиве, удовлетворяющих некоторому условию
+        int kol = 0;
+        for (int el: a){
+            if(el == 0 ){
+                kol++;
+            }
+        }
+
+        System.out.println("Колличество нулей: "+kol);
+
+        // Перебор элементов с четными (нечетными) индексами
+        // 1 вар
+        /*   double p = 1;
+        for (int i = 0; i <a.length ; i++) {
+            if(i%2!=0){
+                p *= a[i];
+            }
+        }
+        System.out.println("Произведения с нечет индексами "+p);
+*/
+        double p = 1;
+        for (int i = 1; i <a.length ; i+=2) {
+                p *= a[i];
+        }
+        System.out.printf("Произведения с нечет индексами %.2f",p);
+        // Поиск максимального значения в массиве
+        int max = a[0];
+        int imax = 0;
+        for (int i = 0; i <a.length ; i++) {
+            if (a[i]>=max){
+                max = a[i];
+                imax = i;
+            }
+        }
+        System.out.println("\nМаксимум = "+max+"\nА его индек "+ imax);
+
+    }
+}
+
+```
+
+Как отзеркалить массив массив местами.
+```
+import java.util.Random;
+import java.util.Scanner;
+import java.util.stream.IntStream;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int gen = sc.nextInt();
+// Создание массива, рандом числами и вывод в консоль
+        Random r = new Random(gen);
+        int[] a = new int[n];
+        for (int i = 0; i <a.length ; i++) {
+            a[i] = r.nextInt(-5, 16);
+            System.out.print(a[i]+" ");
+        }
+        System.out.println();
+        int[] b = IntStream.rangeClosed(1, a.length).map(i -> a[a.length-i]).toArray();
+        for (int i = 0; i <b.length ; i++) {
+            System.out.print(b[i]+" ");
+        }
+    }}
+```
