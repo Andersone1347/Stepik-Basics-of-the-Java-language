@@ -983,3 +983,311 @@ class Main {
         }
     }}
 ```
+## Задача
+Массив из целых чисел заполнить случайными значениями от -5 до 5 (включая обе границы) Пользователь вводит размер массива, а затем начальное значение генератора случайных чисел.
+
+Вывести исходный массив на консоль в одной строке, разделяя элементы пробелами. Пробел должен быть в том числе и после последнего элемента массива.
+
+Найти сумму положительных элементов массива и произведение отрицательных элементов. Произведение быстро растет, поэтому оно должно иметь тип double.
+
+C новой строки вывести результаты программы через пробел (сначала сумму, а потом произведение). 
+
+Тестовые данные
+Sample Input:
+
+10 7
+Sample Output:
+
+-3 5 5 -3 1 -1 0 2 5 5 
+23 -9.0
+## Решения
+```
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int gen = sc.nextInt();
+// Создание массива, рандом числами и вывод в консоль
+        Random r = new Random(gen);
+        int[] a = new int[n];
+        for (int i = 0; i <a.length ; i++) {
+            a[i] = r.nextInt(-5, 6);
+            System.out.print(a[i]+" ");
+        }
+        int sun = 0;
+        double minus = 1;
+        for (int el: a){
+            if(el>=0){
+            sun+=el;}
+            if(el<0){
+                minus*=el;
+            }
+        }
+        System.out.println("\n"+sun+" "+minus);
+    }}
+```
+Автора курса
+```
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int beg = scan.nextInt();
+        Random rand = new Random(beg);
+        int[] mas = new int[n];
+        for(int i = 0; i < mas.length; i++) {
+            mas[i] = rand.nextInt(-5,6);
+            System.out.print(mas[i] + " ");
+        }
+        System.out.println();
+        int sum = 0;
+        double product = 1;
+        for (int el:mas) {
+            if(el > 0){
+                sum += el;
+            }
+            if(el < 0) {
+                product *= el;
+            }
+        }
+        System.out.println(sum + " " + product);
+    }
+}
+```
+
+## Задача
+Массив из вещественных чисел заполнить случайными значениями от 0 до 5 (не включая). Пользователь вводит размер массива, а затем начальное значение генератора случайных чисел.
+
+Вывести исходный массив на консоль в одной строке, разделяя элементы пробелами. Пробел должен быть в том числе и после последнего элемента массива. 
+
+Найти среднее арифметическое элементов массива и вывести его с новой строки. Заменить все элементы, большие среднего, его значением.
+
+C новой строки вывести преобразованный массив. Элементы отделяются пробелами. 
+
+Все вещественные числа при выводе округляются до двух знаков после десятичной точки.
+
+Тестовые данные
+Sample Input:
+
+10 45
+Sample Output:
+
+3.63 4.35 1.50 3.77 1.29 3.07 2.09 4.80 4.70 3.77 
+3.30
+3.30 3.30 1.50 3.30 1.29 3.07 2.09 3.30 3.30 3.30
+## Решения
+```
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int gen = sc.nextInt();
+// Создание массива, рандом числами и вывод в консоль
+        Random r = new Random(gen);
+        double[] a = new double[n];
+        double sum = 0;
+        for (int i = 0; i <a.length ; i++) {
+            a[i] = r.nextDouble(0, 5);
+            System.out.printf("%.2f ",a[i]);
+            sum+=a[i];
+        }
+
+        System.out.printf("\n%.2f",sum/n);
+        System.out.println();
+
+        for (int i = 0; i < a.length; i++) {
+           if(a[i]>sum/n){
+               a[i]=sum/n;
+           }
+            System.out.printf("%.2f ",a[i]);
+        }
+
+
+
+    }}
+```
+
+## Задача
+Массив целых неотрицательных чисел вводится с консоли. Сначала пользователь вводит количество элементов массива, а потом сами элементы.
+
+Найти последний минимальный элемент и заменить его  на -1. 
+
+Преобразованный массив вывести на консоль, отделяя элементы пробелами.
+
+Тестовые данные
+Sample Input:
+
+8
+2 11 2 15 6 2 20 7
+Sample Output:
+
+2 11 2 15 6 -1 20 7
+## Решения
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int[] b = new int[a];
+        for (int i = 0; i < b.length ; i++) {
+            b[i] = sc.nextInt();
+        }
+
+
+        int min = b[0];
+        int minInd = 0;
+        for (int i = 0; i <b.length ; i++) {
+            if (b[i]<=min){
+                min = b[i];
+                minInd=i;
+            }
+        }
+        b[minInd]=-1;
+        for(int el:b) {
+            System.out.print(el + " ");
+        }
+    }
+}
+```
+
+## Задача
+Массив из целых чисел заполнить случайными значениями от -5 до 15 (включая обе границы) Пользователь вводит размер массива, а затем начальное значение генератора случайных чисел.
+
+Вывести исходный массив на консоль в одной строке, разделяя элементы пробелами. Пробел должен быть в том числе и после последнего элемента массива.
+
+Поменять местами первый максимальный и последний отрицательный элементы. Если отрицательных элементов нет в массиве, то он должен остаться без изменения.
+
+C новой строки вывести измененный массив, отделяя элементы пробелами.
+
+Тестовые данные
+Sample Input:
+
+10 77
+Sample Output:
+
+7 -5 -1 5 -3 8 2 -1 -3 -3 
+7 -5 -1 5 -3 -3 2 -1 -3 8
+## Решения
+```
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.stream.IntStream;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int gen = sc.nextInt();
+// Создание массива, рандом числами и вывод в консоль
+        Random r = new Random(gen);
+        int[] a = new int[n];
+        for (int i = 0; i <a.length ; i++) {
+            a[i] = r.nextInt(-5, 16);
+            System.out.print(a[i]+" ");
+        }
+        
+        System.out.println();
+        
+        int min = a[0];
+        int minInd = 0;
+        int max = a[0];
+        int imax = 0;
+        for (int i = 0; i <a.length ; i++) {
+            if (a[i]>=max){
+                max = a[i];
+                imax = i;
+            }
+            if(a[i]<0){
+                min = a[i];
+                minInd = i;
+            }
+        }
+
+        int tmp = a[minInd];
+        a[minInd]=a[imax];
+        a[imax] = tmp;
+
+        for (int i = 0; i <a.length ; i++) {
+            System.out.print(a[i]+" ");
+        }
+        }
+    }
+```
+Автора курса
+```
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[] a = new int[scan.nextInt()];
+        Random rand = new Random(scan.nextLong());
+        for(int i = 0; i < a.length; i++) {
+            a[i] = rand.nextInt(-5, 16);
+            System.out.print(a[i] + " ");
+        }
+        System.out.println();
+        int imax = 0;
+        int ineg = -1;
+        for(int i=0; i < a.length; i++) {
+            if (a[i] > a[imax]) {
+                imax = i;
+            }
+            if (a[i] < 0) {
+                ineg = i;
+            }
+        }
+        if(ineg != -1) { //отрицательные есть
+            int tmp = a[ineg];
+            a[ineg] = a[imax];
+            a[imax] = tmp;
+        }
+        for(int i = 0; i < a.length; i++) {
+            System.out.print(a[i] + " ");
+        }
+        System.out.println();
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+## Задача
+
+## Решения
+```
+
+```
+
+## Задача
+
+## Решения
+```
+
+```
