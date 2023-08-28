@@ -1756,8 +1756,84 @@ NO
 1
 
 ## Решения
+моё
+```
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[][] array = new int[scan.nextInt()][scan.nextInt()];
+        Random rand = new Random(scan.nextLong());
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                array[i][j] = rand.nextInt(-10, 11);
+                System.out.print(array[i][j] + "\t");
 
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i <array.length ; i++) {
+            int count = -1;
+            for (int j = 0; j <array[i].length ; j++) {
+                if(array[i][j]<=count){
+                    count = j;
+                    break;
+                }
+            }
+            if (count>=0){
+            System.out.println(count);
+            count = 0;
+            }else {
+                System.out.println("NO");
+            }
+
+        }
+
+    }
+}
+
+```
+преподователя
+
+```
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[][] mas = new int[scan.nextInt()][scan.nextInt()];
+        Random rand = new Random(scan.nextLong());
+        for (int i = 0; i < mas.length; i++) {
+            for (int j = 0; j < mas[i].length; j++) {
+                mas[i][j] = rand.nextInt(-10, 11);
+                System.out.print(mas[i][j] + "\t");
+            }
+            System.out.println();
+        }
+        for (int i = 0; i < mas.length; i++) {
+            int find =-1;
+            for (int j = 0; j < mas[i].length; j++) {
+                if (mas[i][j] < 0) {
+                    find = j;
+                    break;
+                }
+            }
+            if (find == -1) {
+                System.out.println("No");
+            } else {
+                System.out.println(find);
+            }
+        }
+
+    }
+}
+
+```
 ## Задача
 
 ## Решения
