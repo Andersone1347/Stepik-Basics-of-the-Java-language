@@ -1593,3 +1593,171 @@ public class Example6 {
     }
 }
 ```
+
+## Задача
+Пользователь вводит количество строк и столбцов двумерного массива, а затем начальное значение генератора случайных чисел. Создать целочисленный массив указанной размерности и инициализировать его случайными числами от -5 до 4. Массив вывести на консоль в виде таблицы, элементы которой отделяются знаками табуляции. Знак табуляции должен быть и  в конце каждой строки.
+
+Найти максимальный элемент и подсчитать, сколько раз он встречается в массиве. Вывести максимальный элемент и найденное количество с  новой строки через пробел.
+
+Тестовые данные
+Sample Input:
+
+4 5 100
+Sample Output:
+
+0	-5	-1	3	-4	
+1	1	3	-2	-2	
+-3	2	1	2	-3	
+4	-5	3	-2	4	
+4 2
+## Решения
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[][] array = new int[scan.nextInt()][scan.nextInt()];
+        Random rand = new Random(scan.nextLong());
+        int average = 0;
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                array[i][j] = rand.nextInt(-5,5);
+                System.out.print(array[i][j] + "\t");
+
+            }
+            System.out.println();
+        }
+
+        int kol = 0;
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if(array[i][j]>average){
+                    average = array [i][j];
+                }
+                }
+            }
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if(array[i][j]==average){
+                    kol++;
+                }
+            }
+        }
+
+        System.out.printf("%d %d", average, kol);
+    }
+}
+## Задача
+Пользователь вводит количество строк и столбцов двумерного массива, а затем начальное значение генератора случайных чисел. Создать массив целых чисел указанной размерности и инициализировать его случайными числами от -10 до 10. Массив вывести на консоль в виде таблицы, элементы которой отделяются знаками табуляции. Знак табуляции должен быть и  в конце каждой строки.
+
+Вывести пустую строку после двумерного массива.
+
+Для каждого столбца найти сумму положительных элементов и вывести на консоль, отделяя пробелами.
+
+Тестовые данные
+Sample Input:
+
+4 5 89
+Sample Output:
+
+-3	-9	8	-6	2	
+9	1	-4	-4	-5	
+-10	5	-6	3	-3	
+-2	7	-4	1	-4	
+
+9 13 8 4 2 
+## Решения
+моё
+```
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[][] array = new int[scan.nextInt()][scan.nextInt()];
+        Random rand = new Random(scan.nextLong());
+        int average = 0;
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                array[i][j] = rand.nextInt(-10, 11);
+                System.out.print(array[i][j] + "\t");
+
+            }
+            System.out.println();
+        }
+        System.out.print("\n");
+        int count = 0;
+        for (int i = 0; i < array[0].length; i++) {
+            for (int j = 0; j < array.length; j++) {
+                if (array[j][i]>0){
+                    count += array[j][i];
+                }
+            }
+            System.out.print(count+" ");
+            count =0;
+        }
+    }
+}
+
+
+```
+Преподователя
+```
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[][] mas = new int[scan.nextInt()][scan.nextInt()];
+        Random rand = new Random(scan.nextLong());
+        for (int i = 0; i < mas.length; i++) {
+            for (int j = 0; j < mas[i].length; j++) {
+                mas[i][j] = rand.nextInt(-10, 11);
+                System.out.print(mas[i][j] + "\t");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        for (int j = 0; j < mas[0].length; j++) { //количество столбцов одинаковое
+            int sum = 0;
+            for (int i = 0; i < mas.length; i++) {
+                if (mas[i][j] > 0) {
+                    sum += mas[i][j];
+                }
+            }
+            System.out.print(sum + " ");
+        }
+    }
+}
+
+```
+## Задача
+Пользователь вводит количество строк и столбцов двумерного массива, а затем начальное значение генератора случайных чисел. Создать массив целых чисел указанной размерности и инициализировать его случайными числами от -10 до 10. Массив вывести на консоль в виде таблицы, элементы которой отделяются знаками табуляции. Знак табуляции должен быть и  в конце каждой строки.
+
+В каждой строке найти первый отрицательный элемент и вывести индекс соответствующего столбца или слово "NO", если он отсутствует.
+
+Тестовые данные
+Sample Input:
+
+4 3 100
+Sample Output:
+
+6	0	-6	
+2	-9	-4	
+7	7	3	
+0	-9	-8	
+2
+1
+NO
+1
+
+## Решения
+
+
+## Задача
+
+## Решения
