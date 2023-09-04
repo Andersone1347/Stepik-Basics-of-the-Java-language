@@ -1835,11 +1835,510 @@ public class Main{
 
 ```
 ## 4.4 Массивы и методы
+Пример
+```
+import java.util.Random;
 
+public class Main {
+    public static void main(String[] args) {
+        int[] a = new int[7];
+        init(a);
+        print(a);
+        int[] b = reduce(a,4); //обрезаем до 4-х элементов
+        print(b);
+}
+    public static void init(int[] mas){    // иницилизируем массив
+        Random rand = new Random();
+        for(int i = 0; i < mas.length; i++){
+            mas[i] = rand.nextInt(11);
+        }
+    }
+    public static void print(int[] mas) {      // выводим массив
+        for(int i = 0; i < mas.length; i++){
+            System.out.print(mas[i] + " ");
+        }
+        System.out.println();
+    }
+    public static int[] reduce(int[] mas, int limit){
+    if (limit <0 || limit > mas.length) {
+            return mas;
+    }
+    int[] result = new int[limit];//выделяем память под массив
+    for (int i = 0; i < limit; i++){//переписываем часть исходно массива
+        result[i]=mas[i];
+    }
+    return result; //возврат ссылки на новый массив
+}
+}
+```
+## Задача
+Индекс максимума
+Напишите три статических метода  для работы с одномерным массивом целых чисел:
 
+1) init()  - заполнение массива случайными числами от -3 до 5;
 
+2) print() - вывод массива на консоль в строку, отделяя элементы пробелами;
 
+3) findMax() - поиск индекса первого максимального элемента в одномерном массиве.
 
+Пользователь вводит количество элементов одномерного массива и начальное значение генератора случайных чисел. 
+
+Выводится на консоль сформированный массив, и затем с новой строки - найденный индекс первого максимального элемента  в массиве.
+
+Код метода main() менять нельзя!
+
+Тестовые данные
+Sample Input:
+
+10 15
+Sample Output:
+
+0 -1 -2 0 -2 2 2 4 2 -2 
+7
+## Решения
+```
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[] ar = new int[scan.nextInt()];
+        long seed = scan.nextLong();
+        init(ar,seed);
+        print(ar);
+        int ind = findMax(ar);
+        System.out.println(ind);
+
+    }
+    public static void init(int[] mas, long s){    // иницилизируем массив
+        Random rand = new Random(s);
+        for(int i = 0; i < mas.length; i++){
+            mas[i] = rand.nextInt(-3,6);
+        }
+    }
+    public static void print(int[] mas) {      // выводим массив
+        for(int i = 0; i < mas.length; i++){
+            System.out.print(mas[i] + " ");
+        }
+        System.out.println();
+    }
+    public static int findMax(int[] mas){
+        int count = -1, in = 0;
+        for (int i = 0; i <mas.length ; i++) {
+            if(count<mas[i]){
+                in = i;
+                count=mas[i];
+            }
+        }
+        return in; //возврат ссылки на новый массив
+    }
+}
+```
+**Двумерные массивы и методы**
+Ссылка на двумерный массив может быть параметром и результатом метода совершенно  аналогично одномерному массиву.
+
+Пример. В методе insertRow() выполняется вставка новой строки c индексом k в уже существующий массив mas. Строка заполняется нулями. Метод возвращает ссылку на новый массив. При этом возможны два варианта создания нового массива:
+
+1) полностью отдельная копия массива с добавленной строкой. С исходным массивом никакой связи уже не будет:
+```
+public static int[][] insertRow(int[][] mas, int k) {
+        if (k < 0 || k > mas.length) {
+            return mas;
+        }
+        int[][] b = new int[mas.length + 1][mas[0].length];
+        for (int i = 0; i < k; i++) { //переписываем все до k-й строки
+            for (int j = 0; j < mas[i].length; j++) {
+                b[i][j] = mas[i][j];
+            }
+        }
+        for (int i = k; i < mas.length; i++) { //переписываем от k-й строки до конца
+            for (int j = 0; j < mas[i].length; j++) {
+                b[i + 1][j] = mas[i][j];
+            }
+        }
+        //вставка строки
+        b[k] = new int[mas[0].length]; //количество столбцов из любой строки возьмем
+        return b;
+    }
+```
+Пример вызова из main():
+```
+public static void main(String[] args) {
+    int[][] a = new int[3][2];
+    init(a); //код этих методов
+    print(a); //опускаю
+    System.out.println();
+    int[][] result = insertRow(a,2);
+    print(result);
+}
+```
+В итоге в памяти после вызова insertRow() cформируется такая картина:
+
+![alt](/img/oned.png)
+
+2) Создается новый массив ссылок на строки. А массивы - строки используются прежние. Этот способ можно использовать только тогда, когда исходный массив уже не потребуется.
+```
+public static int[][] insertRow(int[][] mas, int k) {
+    if (k < 0 || k > mas.length) {
+        return mas;
+    }
+    int[][] b = new int[mas.length+1][];
+    for (int i = 0; i < k; i++) {//переписываем все до k-й строки
+        b[i] = mas[i];
+    }
+    for (int i = k; i < mas.length; i++) { //переписываем от k-й строки до конца
+        b[i+1] = mas[i];
+    }
+    //вставка строки
+    b[k] = new int[mas[0].length]; //количество столбцов из любой строки возьмем
+    return b;
+}
+```
+В итоге получим в памяти такую картинку:
+
+![alt](/img/twoimg.png)
 
 ## Задача
-## Решения
+Максимумы в строках
+Напишите три статических метода для работы с двумерным массивом:
+
+1) initArray() - инициализирует двумерный массив случайными числами от 0 до 10;
+
+2) printArray() - выводит двумерный массив на консоль в виде таблицы (элементы строках отделяются знаками табуляции, и знак табуляции должен быть в конце каждой строки)
+
+3)  printMaxIndex() - для каждой строки двумерного массива выводит индекс первого максимального элемента. Элементы отделяются пробелами.
+
+В методе main() вводятся три целых числа: количество строк и количество столбцов массива, а затем начальное значение генератора случайных чисел.
+
+Двумерный массив создается и выводится, а затем выводятся индексы максимальных элементов. Код метода main() менять нельзя!
+
+P.S. Желательно при реализации метода printMaxIndex() использовать вызов метода findMax(), который был написан на предыдущем шаге.
+
+Тестовые данные
+Sample Input:
+
+3 4 88
+Sample Output:
+
+1	10	2	8	
+9	8	2	9	
+3	2	9	0	
+
+1 0 2 
+## Решение
+моё
+```
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[][] mas = new int[scan.nextInt()][scan.nextInt()];
+        long seed = scan.nextLong();
+        initArray(mas, seed);
+        printArray(mas);
+        System.out.println();
+        printMaxIndex(mas);
+    }
+    public static void initArray(int[][] mas, long a){
+        Random rand = new Random(a);
+        for (int i = 0; i < mas.length; i++) {
+            for (int j = 0; j <mas[i].length ; j++) {
+                mas[i][j] = rand.nextInt(0,11);
+            }
+        }
+    }
+
+    public static void printArray(int[][] a){
+        for (int i = 0; i <a.length ; i++) {
+            for (int j = 0; j <a[i].length ; j++) {
+                System.out.print(a[i][j]+ "\t");
+            }
+            System.out.println();
+        }
+    }
+    public static void printMaxIndex(int[][] a){
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(findMax(a[i])+" ");
+        }
+    }
+
+    public static int findMax(int[] mas){
+        int count = -1, in = 0;
+        for (int i = 0; i <mas.length ; i++) {
+            if(count<mas[i]){
+                in = i;
+                count=mas[i];
+            }
+        }
+        return in; //возврат ссылки на новый массив
+    }
+}
+```
+Автора курса
+```
+import java.util.Scanner;
+import java.util.Random;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[][] mas = new int[scan.nextInt()][scan.nextInt()];
+        long seed = scan.nextLong();
+        initArray(mas, seed);
+        printArray(mas);
+        System.out.println();
+        printMaxIndex(mas);
+    }
+   public static void initArray(int[][] a, long seed){
+        Random rand = new Random(seed);
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                a[i][j] = rand.nextInt(11);
+            }
+        }
+    }
+    public static void printArray(int[][] a){
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                System.out.print(a[i][j] + "\t");
+            }
+            System.out.println();
+        }
+
+    }
+    public static void printMaxIndex(int[][] a){
+        for (int i = 0; i < a.length; i++){
+            System.out.print(findMax(a[i]) + " ");
+        }
+    }
+    public static int findMax(int[] ar){
+        int find = 0;
+        for (int i = 1; i < ar.length; i++) {
+            if (ar[i] > ar[find]) {
+                find = i;
+            }
+        }
+        return find;
+    }
+}
+```
+
+## Задача
+Напишите четыре статических метода  для работы с одномерным массивом целых чисел:
+
+1) init()  - заполнение массива случайными числами от -3 до 5;
+
+2) print() - вывод массива на консоль в строку, отделяя элементы пробелами;
+
+3) findMax() - поиск индекса первого максимального элемента в одномерном массиве.
+
+4) reduceAfterMax() - создает новый массив, удаляя все элементы после первого максимума.
+
+Первые три метода уже были созданы на шаге 2.
+
+В main() пользователь вводит количество элементов одномерного массива и начальное значение генератора случайных чисел. 
+
+Выводится на консоль сформированный массив, и затем с новой строки  - сформированный массив с удаленной частью.
+
+Код метода main() менять нельзя!
+
+Тестовые данные
+Sample Input:
+
+10 99
+Sample Output:
+
+1 2 3 3 0 5 4 5 2 5 
+1 2 3 3 0 5 
+## Решение
+```
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[] ar = new int[scan.nextInt()];
+        long seed = scan.nextLong();
+        init(ar, seed);
+        print(ar);
+      int[] b = reduceAfterMax(ar);
+       print(b);
+    }
+    public static void init(int[] mas, long s){    // иницилизируем массив
+        Random rand = new Random(s);
+        for(int i = 0; i < mas.length; i++){
+            mas[i] = rand.nextInt(-3,6);
+        }
+    }
+    public static void print(int[] mas) {      // выводим массив
+        for(int i = 0; i < mas.length; i++){
+            System.out.print(mas[i] + " ");
+        }
+        System.out.println();
+    }
+
+    public static int[] reduceAfterMax(int[] a){
+        int b = findMax(a);
+        a = Arrays.copyOf(a,b+1);
+        return a;
+    }
+
+    public static int findMax(int[] mas){
+        int count = -1, in = 0;
+        for (int i = 0; i <mas.length ; i++) {
+            if(count<mas[i]){
+                in = i;
+                count=mas[i];
+            }
+        }
+        return in; //возврат ссылки на новый массив
+    }
+}
+
+```
+автора курса 
+```
+import java.util.Scanner;
+import java.util.Random;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int[] ar = new int[scan.nextInt()];
+        long seed = scan.nextLong();
+        init(ar, seed);
+        print(ar);
+        int[] b = reduceAfterMax(ar);
+        print(b);
+    }
+   public static void init(int[] ar, long seed){
+        Random rand = new Random(seed);
+        for (int i = 0; i < ar.length; i++) {
+            ar[i] = rand.nextInt(-3, 6);
+        }
+
+    }
+    public static void print(int[] ar){
+        for (int i = 0; i < ar.length; i++) {
+            System.out.print(ar[i] + " ");
+        }
+        System.out.println();
+    }
+    public static int findMax(int[] ar){
+        int find = 0;
+        for (int i = 1; i < ar.length; i++) {
+            if (ar[i] > ar[find]) {
+                find = i;
+            }
+        }
+        return find;
+    }
+    public static int[] reduceAfterMax(int[] ar) {
+        int find = findMax(ar);
+        int[] b = new int[find+1];
+        for (int i=0; i <= find; i++) {
+            b[i] = ar[i];
+        }
+        return b;
+    }
+}
+```
+
+## Задача
+Удаление строк
+Напишите три статических метода для работы с двумерным массивом:
+
+1) initArray() - инициализирует двумерный массив случайными числами от 0 до 10;
+
+2) printArray() - выводит двумерный массив на консоль в виде таблицы (элементы строках отделяются знаками табуляции, и знак табуляции должен быть в конце каждой строки)
+
+3)  deleteRow() - создает новый двумерный массив из исходного (первый параметр метода), удаляя строку, индекс которой передается в качестве второго параметра. Если индекс неверный (отрицательный или больше последнего индекса строк), то ничего не происходит.
+
+В методе main() вводятся четыре целых числа: количество строк и количество столбцов массива, начальное значение генератора случайных чисел и номер строки для удаления.
+
+Двумерный массив создается и выводится в виде таблицы. Затем выводится новый массив. Код метода main() менять нельзя!
+
+Тестовые данные
+Sample Input:
+
+4 3 77 2
+Sample Output:
+
+9	6	7	
+9	4	2	
+6	5	5	
+6	0	9	
+
+9	6	7	
+9	4	2	
+6	0	9
+## Решение
+```
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+       Scanner scan = new Scanner(System.in);
+        int[][] mas = new int[scan.nextInt()][scan.nextInt()];
+        long seed = scan.nextLong();
+        int ind = scan.nextInt();
+        initArray(mas, seed);
+        printArray(mas);
+        System.out.println();
+        mas = deleteRow(mas, ind);
+        printArray(mas);
+    }
+   public static int[][] deleteRow(int[][] a, int ind){
+        if (ind < 0 || ind >= a.length){
+            return a;
+        }
+        int[][] b = new int[a.length-1][];
+        //первая версия - когда старый массив сохранять не нужно
+//        for (int i = 0; i < ind; i++) { //переписываем ссылки до удаляемой строки
+//            b[i] = a[i];
+//        }
+//        for (int i = ind + 1; i < a.length; i++) { //переписываем ссылки после удаляемой строки
+//            b[i - 1] = a[i];
+//        }
+        //вторая версия - когда старый массив не должен измениться, 
+        // копируем все элементы
+        for (int i = 0; i < ind; i++) { 
+            b[i] = new int[a[i].length];
+            for(int j = 0; j < a[i].length; j++) {
+                b[i][j] = a[i][j];
+            }
+        }
+        for (int i = ind + 1; i < a.length; i++) {
+            b[i-1] = new int[a[i].length];
+            for (int j = 0; j < a[i].length; j++) {
+                b[i-1][j] = a[i][j];
+            }
+        }
+        return b;
+    }
+    public static void initArray(int[][] a, long seed){
+        Random rand = new Random(seed);
+        for( int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                a[i][j] = rand.nextInt(11);
+            }
+        }
+    }
+    public static void printArray(int[][] a){
+        for( int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                System.out.print(a[i][j] + "\t");
+            }
+            System.out.println();
+        }
+
+    }
+}
+```
+
