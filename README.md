@@ -904,6 +904,7 @@ class Main {
         int n = sc.nextInt();
         int gen = sc.nextInt();
 // Создание массива, рандом числами и вывод в консоль
+
         Random r = new Random(gen);
         int[] a = new int[n];
         for (int i = 0; i <a.length ; i++) {
@@ -912,12 +913,14 @@ class Main {
         }
         System.out.println();
         // Сумма элементов массива
+
         int sun = 0;
         for (int el: a){
             sun+=el;
         }
         System.out.println("Cумма равна:"+sun);
         // Подсчет количества элементов в массиве, удовлетворяющих некоторому условию
+
         int kol = 0;
         for (int el: a){
             if(el == 0 ){
@@ -1390,7 +1393,7 @@ System.out.println(Arrays.toString(list2));
 А вот как это выглядит в памяти:
 ![alt](/img/111.png)
 
- Метод Arrays.copyOfRange()
+ **Метод Arrays.copyOfRange()**
 int[] copyOfRange(int[] original, int from, int to)
 Создает  массив и копирует в него элементы массива original с индекса from до индекса to (как обычно, не включая этот элемент). Аналогично методу copyOf() существуют перегрузки для различных типов элементов массива.
 ```
