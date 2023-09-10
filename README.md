@@ -2345,3 +2345,820 @@ public class Main {
 }
 ```
 
+## 5.1 Класс String
+
+Класс String
+Любая символьная строка (в том числе и строковый литерал) по умолчанию является объектом класса String. Например, в следующем операторе: 
+```
+System.out.println("I love Java"); 
+```
+символьная строка "I love Java" является объектом класса String.
+
+Объекты класса String являются неизменяемыми после их создания. Но всегда можно создать новую символьную строку, которая содержит нужные изменения. Кроме того, в Java определены  другие классы (StringBuffer и StringBuilder), которые допускают изменение символьных строк.
+
+Класс String входит в пакет java.lang, который подключается в любую java-программу по умолчанию. Поэтому его не нужно импортировать.
+
+String -  ссылочный тип. Описание String st; создает в стековой памяти переменную для хранения ссылки на объект-строку. А сам объект (который будет размещен в динамической памяти) еще не создан. Рассмотрим различные способы создания объекта-строки.
+
+Создание строк
+1)    Инициализировать строку строковым литералом:
+```
+String myString = "Это тестовая строка";
+```
+2)    Можно также воспользоваться операцией new:
+```
+String s = new String(); //создание пустой строки
+String name = new String("Вася");
+```
+3)    Создать строку на основе массива символов:
+```
+char chars[] = {'a', 'b', 'c'};
+String s2 = new String(chars);
+System.out.println(s2); //выводит abc
+```
+4)    Создать строку на основе части массива символов:
+```
+String(char chars[], int начальныйИндекс, int числоСимволов);
+```
+Пример:
+```
+char chars2[] = {'a', 'b', 'c', 'd', 'e', 'f'};
+String s3 = new String(chars2, 2, 3);
+System.out.println(s3); //выводит cde
+```
+5)    Создать строку с указанием кодировки (если пока не понимаете этот код, просто пропустите - исключения мы изучим в следующем курсе)
+```
+try{
+    String s5 = new String(s3.getBytes(), "UTF-8");
+    System.out.println(s5);
+}catch(UnsupportedEncodingException exc){
+    System.out.println("Кодировка не поддерживается");
+}
+```
+Для объектов класса  String определена одна операция: +, предназначенная для сцепления (конкатенации) двух символьных строк. Например, в результате приведенной ниже операции переменной str присваивается символьная строка "Мне нравится Java." .
+```
+String str = "Мне " + "нравится " + "Java.";
+```
+Статические методы класса String
+static String valueOf(значение) — преобразование переменной базового типа к строке;
+ String str = String.valueOf(0.5);
+static String format(String format, Object… args)— генерирует форматированную строку. Используемые спецификаторы форматирования в целом аналогичны спецификаторам в языке С++. Такое же форматирование выполняется и при использовании метода printf() (https://stepik.org/edit-lesson/813895/step/1) Имеется  ряд удобных спецификаторов для преобразования времени и даты. Подробнее про спецификаторы форматирования можно прочесть здесь: https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html
+```
+String result = String.format("Жили у бабуси %d веселых гуся", 2);
+System.out.println(result);
+double x = 3.1415;
+String out = String.format("x=%6.3f", x);
+System.out.println(out);
+```
+Сравнение строк
+Переменная типа String имеет ссылочный тип. Поэтому операция сравнения (==) двух переменных типа String вернет true только в том случае, если эти ссылки указывают на один и тот же объект.
+
+При создании строки операцией new каждому создаваемому объекту String выделяется своя область памяти в куче. Переменные типа String получают в качестве значения разные ссылки, и результат их сравнения (==) будет false.
+```
+String s3 = new String("Ivan");
+String s4 = new String("Ivan");
+System.out.println(s3 == s4); // false
+```
+ Для сравнения содержимого строк следует использовать метод equals(), который для строк из примера выше вернет true:
+```
+System.out.println(s3.equals(s4)); // true
+```
+Если нужно сравнивать строки на больше-меньше, то используется метод 
+```
+int compareTo(String s)
+```
+Метод вызывается от имени одной из сравниваемых строк, а вторая строка передается ему в качестве параметра. Если первая строка больше, то метод возвращает положительное число, если она меньше, то отрицательное число, и 0 - если строки равны.
+
+Сравнение строк выполняется в лексикографическом порядке. Сравниваются первые символы обоих строк. Если код символа больше, то вся строка считается больше. Если символы одинаковые, то далее сравниваются вторые символы строк, и т.д. Если одна строка закончится раньше другой (при одинаковых символах), то она считается меньше.
+```
+String ss3 = new String("Ivan");
+String ss5=new String("Petr");
+if(ss3.compareTo(ss5) > 0){
+      System.out.println("Первая строка больше");
+}else if(ss3.compareTo(ss5) < 0){
+      System.out.println("Первая строка меньше"); //будет этот вывод
+}else{
+      System.out.println("Строки равны");
+}
+```
+## задача
+Введите три строки (могут содержать пробелы). Выведите их в порядке возрастания. 
+
+Тестовые данные
+Sample Input:
+
+Hello, world!
+Hello, sky!
+By-by, baby!
+Sample Output:
+
+By-by, baby!
+Hello, sky!
+Hello, world!
+## решение
+моё
+```
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] a = new String[3];
+        for (int i = 0; i < a.length ; i++) {
+            a[i] = sc.nextLine();
+        }
+        Arrays.sort(a);
+        for (int i = 0; i < a.length ; i++) {
+            System.out.println(a[i]);
+        }
+    }
+}
+```
+автора
+```
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String str1 = scan.nextLine();
+        String str2 = scan.nextLine();
+        String str3 = scan.nextLine();
+        if (str1.compareTo(str2) > 0) {
+            String tmp = str1;
+            str1 = str2;
+            str2 = tmp;
+        }
+        if (str2.compareTo(str3) > 0) {
+            String tmp = str2;
+            str2 = str3;
+            str3 = tmp;
+        }
+        if (str1.compareTo(str2) > 0) {
+            String tmp = str1;
+            str1 = str2;
+            str2 = tmp;
+        }
+        System.out.println(str1);
+        System.out.println(str2);
+        System.out.println(str3);
+
+    }
+}
+```
+## 5.1 Класс String
+ Методы экземпляра класса String:
+String concat(String s) (аналог «+») — слияние строк;
+boolean equals(Object ob) — сравнение строк с учетом регистра;
+boolean equalsIgnoreCase(String s) — сравнение строк без учета регистра;
+int compareTo(String s) и compareToIgnoreCase(String s) — лексикографическое сравнение строк с учетом и без учета их регистра. Метод осуществляет вычитание кодов первых различных символов вызывающей и передаваемой в метод строки и возвращает целое значение. Метод возвращает значение нуль в случае, когда equals() возвращает значение true;
+boolean contentEquals(StringBuffer ob) — сравнение строки и содержимого объекта типа StringBuffer;
+String substring(int n, int m) — извлечение из строки подстроки начиная с индекса n и заканчивая индексом m (не включая). Нумерация символов в строке начинается с нуля;
+String substring(int n) — извлечение из строки подстроки, начиная с позиции n до конца строки;
+int length() — определение длины строки;
+int indexOf(char ch)— определение позиции символа  в строке. Возвращает индекс первого появления символа, либо -1, если символ не обнаружен. Аналогично перегруженный метод int indexOf(String str)  поиска индекса начала подстроки str.
+int indexOf(char ch, int n), int indexOf(String str, int n) — определение позиции символа  или подстроки, поиск вправо начинается с позиции n. Возвращает -1, если символ/подстрока не обнаружен;
+int lastIndexOf(char ch), int lastIndexOf(String str) — определение последней позиции символа или подстроки. Возвращает -1, если символ/подстрока не обнаружен;
+int lastIndexOf(char ch, int n), int lastIndexOf(String str, int n) — определение позиции символа  или подстроки, поиск влево начинается с позиции n. Возвращает -1, если символ/подстрока не обнаружен;
+String toUpperCase()/toLowerCase() — преобразование всех символов вызывающей строки в верхний/нижний регистр;
+String replace(char с1, char с2) — замена в строке всех вхождений первого символа вторым символом. Есть перегрузка этого метода для замены одной подстроки другой:: String replace(String str1, String str2)
+String intern() — заносит строку в «пул» литералов и возвращает ее объектную ссылку. Пример использования этого метода показан далее.
+String trim() — удаление всех пробелов в начале и конце строки;
+char charAt(int position) — возвращение символа из указанной позиции (нумерация с нуля);
+boolean isEmpty() — возвращает true, если длина строки равна 0 (пустая строка);
+void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) — извлечение символов строки от символа с индексом srcBegin до символа с индексом srcEnd  (не включая) в массив символов dst , размещение в котором начинается с индекса dstBegin;
+String[] split(String regex) — поиск вхождения в строку заданного регулярного выражения (разделителя) и деление исходной строки в соответствии с этим на массив строк.
+String[] split(String regex, int limit) — деление исходной строки на массив строк, используя разделитель regex (регулярное выражение). Параметр limit означает максимальное количество строк, которое должно быть получено.
+Поскольку литерал является объектом класса String, от его имени можно вызывать все эти методы. 
+```
+System.out.println("abc".length()); //будет выведено 3
+```
+Во всех случаях вызова методов, изменяющих строку, создается новый объект типа String. Сохранить произведенные изменения можно только с применением оператора присваивания, т. е. установкой ссылки на вновь созданный объект.
+```
+import java.util.Scanner;
+public class Runner10 {
+    public static void main(String[] args) {
+        String sample="   Testing strings   ";
+        sample = sample.trim(); //удаление пробелов в начале и в конце
+        System.out.println("|"+sample+"|");
+        System.out.println(sample.charAt(3)); //символ с индексом 3 - это t
+        System.out.println(sample.charAt(sample.length() - 1)); //последний символ - это s
+        String sub = sample.substring(3, 7); //выделение подстроки ting
+        System.out.println(sub);
+        String changed = sample.replace('s', 'z'); //замена символов s на z
+        System.out.println(changed);
+        changed = changed.replace("z", ""); //удаление символов z
+        System.out.println(changed);
+        int findFirst = sample.indexOf('i'); //поиск символа с начала строки
+        System.out.println(findFirst); //выводит 4
+        int findLast = sample.lastIndexOf('i'); //поиск символа с конца строки
+        System.out.println(findLast); //выводит 11
+    }
+}
+```
+ Особенности создания строковых литералов
+При создании строковых литералов они все размещаются в специальном месте динамической памяти, называемом “пул строк”. При первом упоминании строкового литерала в программе создается новый объект класса String в пуле строк. При повторном использовании этого же литерала новый объект не создается, а переменной присваивается ссылка на ранее созданный объект.
+
+Это правило работает и в случае, если литерал является вычисляемым. То есть компилятор воспринимает литералы "Java" и "J" + "ava" как эквивалентные.
+```
+public class Example2 {
+    public static void main(String[] args) {
+        String s1 = "Ivan";
+        String s2 = "Ivan";
+        String s3 = new String("Ivan");
+        String s4 = new String(s1);
+        System.out.println(s1 == s2); // true
+        System.out.println(s3 == s4); // false
+        System.out.println(s1 == s3); // false
+        System.out.println(s1.equals(s2)); //true
+        System.out.println(s1.equals(s3)); // true
+    }
+}
+```
+Первые три вызова println() выводят результат сравнения ссылок, а последние два – сравнение содержимого объектов. Очевидно, что содержимое всех объектов будет одинаковое, поэтому в двух последних случаях выводится true.
+
+ Ссылки s1 и s2 будут равны по следующей причине. При инициализации s2 просматривается пул литералов. Поскольку в нем уже находится соответствующий литерал (он был туда помещен при инициализации s1), то новый литерал не создается, а s2 получает ссылку на уже существующий литерал (т.е. такую же ссылку, как и s1).
+
+При создании s3 происходит вызов конструктора, т. е. выделение памяти происходит раньше инициализации, и в этом случае в куче создается новый объект. Аналогично новый объект создается при создании s4. Схема распределения памяти показана на рисунке:
+
+   ![alt](/img/adasd%D0%B0%D0%BD%D0%B8%D1%8E.png)
+
+Существует возможность сэкономить память и переопределить ссылку с объекта на литерал при помощи вызова метода intern():
+```
+s3 = s3.intern();
+//после этого
+System.out.println(s1 == s3); // true
+```
+Вызов метода intern() организует поиск в «пуле литералов» соответствующего значению объекта s3 элемента, и при положительном результате возвращает ссылку на найденный литерал, а при отрицательном — заносит значение в пул и возвращает ссылку на него. Результат выполнения проиллюстрирован на рисунке:
+
+![alt](/img/dasdasdrn().png)
+
+
+## задача
+Введите строку (в ней возможны пробелы). Замените в ней каждый символ «;»   на пару символов «.,»
+
+Тестовые данные
+Sample Input:
+
+hello;; by!; ;;
+Sample Output:
+
+hello.,., by!., .,.,
+## решение
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        s = s.replace(";",".,");
+        System.out.println(s);
+    }
+}
+```
+
+## задача
+Пользователь вводит три строки, которые содержат части кодового слова. Каждая вводимая строка может содержать пробелы и заканчивается символом перехода на новую строку ('\n').
+
+Части кодового слова выделены внутри строки знаками ';'. Нужно соединить эти части в одну строку и вывести эту строку на консоль. 
+
+Замечание: поскольку предполагается, что кодовое слово будет как-то использовано в дальнейшем, недостаточно его просто вывести на консоль по частям. Нужно именно сформировать его в виде одной строки, а затем уже выводить!
+
+Тестовые данные
+Sample Input:
+
+To be or ;not; to be?
+tes;ting; is good
+I like ;ham; more then eggs
+Sample Output:
+
+nottingham
+## решение
+```
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String a = sc.nextLine(), b = sc.nextLine(), c = sc.nextLine();
+        a = a.substring((a.indexOf(";")+1),a.lastIndexOf(";"));
+        b = b.substring((b.indexOf(";")+1),b.lastIndexOf(";"));
+        c = c.substring((c.indexOf(";")+1),c.lastIndexOf(";"));
+        System.out.println(a+b+c);
+    }
+    }
+
+```
+
+## задача
+Напишите метод, который проверяет, что строка является адресом почты gmail.com (т.е. в конце строки "@gmail.com", и знак @ только один).
+
+Метод main()  менять нельзя!
+
+Тестовые данные
+Sample Input 1:
+
+petr.ivanov@gmail.com
+Sample Output 1:
+
+YES
+Sample Input 2:
+
+ivanov@petr@gmail.com
+Sample Output 2:
+
+NO
+## решение
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        if (isGMailAddress(str)) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
+    }
+
+    public static boolean isGMailAddress(String a) {
+        String b;
+        b = a.substring(a.length()-10,a.length());
+        if (a.contains("@gmail.com") && b.equals("@gmail.com")) {
+            int count = 0;
+            for (int i = 0; i < a.length(); i++) {
+                if (a.charAt(i) == (char) 64) {
+                    count++;
+                }
+            }
+            if (count == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    }
+
+```
+
+## задача
+Напишите статический метод, который проверяет, есть ли в конце строки подстрока ".com". Если да, то он возвращает часть строки без этого фрагмента. Если нет, то он возвращает строку без изменения.
+
+Тестовые данные
+Sample Input 1:
+
+intel.com.think.com
+Sample Output 1:
+
+intel.com.think
+Sample Input 2:
+
+stepik.org
+Sample Output 2:
+
+stepik.org
+## решение
+```
+import java.util.Scanner;
+
+class Main {
+        public static void main(String[] args) {
+            Scanner scan = new Scanner(System.in);
+            String str = scan.nextLine();
+            System.out.println(delCom(str));
+        }
+
+        public static String delCom(String a) {
+        String b;
+        b = a.substring(a.length()-4,a.length());
+        if (a.contains(".com") && b.equals(".com")) {
+        a = a.substring(0,a.length()-4);
+        return a;
+        } else {
+            return a;
+        }
+    }
+    }
+
+```
+**Пример** решения задачи.
+Пользователь вводит строку,  состоящую из слов, разделенных одним или несколькими пробелами.  Пробелы могут быть также в начале и в конце слова.
+
+Сформируйте новую строку, в которой слова исходной строки разделены ровно одним пробелом. Пробелы в начале и в конце слова тоже должны быть удалены. Для проверки этого выведите строку, обрамленную "палочками".
+```
+import java.util.Scanner;
+
+public class Example4 {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        str=str.trim(); //удаляем пробелы в начале и в конце
+        String[] words = str.split(" +"); //формируем массив слов без пробелов
+        String result = ""; //создаем пустую строку
+        for(String word:words){ //перебираем слова в массиве строк
+            result += word; //присоединяем очередное слово к итоговой строке
+            result += " "; //добавляем один пробел
+        }
+        //получился лишний пробел в конце, удаляем его:
+        result = result.trim();
+        System.out.println("|"+result+"|");
+    }
+}
+```
+
+## задача
+Ввести строку из слов, разделенных пробелами. Между словами может быть любое количество пробелов. Также пробелы могут быть перед первым и после последнего слова.
+
+Найти и распечатать первое слово максимальной длины.
+
+Тестовые данные
+Sample Input:
+
+   Свиристелки прилетели     и    запели в унисон   
+Sample Output:
+
+Свиристелки
+## решение
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        str=str.trim(); //удаляем пробелы в начале и в конце
+        String[] words = str.split(" +"); //формируем массив слов без пробелов
+        int result = 0; //создаем пустую строку
+        int ind = 0;
+        for (int i = 0; i < words.length; i++) {
+            if(result<words[i].length()){
+                result = words[i].length();
+                ind = i;
+            }
+        }
+        System.out.println(words[ind]);
+        }
+}
+```
+Автор курса
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        str = str.trim(); //удаляем пробелы в начале и в конце
+        String[] words = str.split(" +"); //формируем массив слов без пробелов
+        int imax = 0; //индекс слова макс длины
+        for (int i = 0; i < words.length; i++) { //перебираем слова в массиве строк
+            if (words[i].length() > words[imax].length()) {
+                imax = i;
+            }
+        }
+        System.out.println(words[imax]);
+    }
+}
+```
+
+## задача
+Ввести текст из слов, разделенных пробелами. Между словами может быть любое количество пробелов. Также пробелы могут быть перед первым и после последнего слова.
+
+Также ввести контрольное слово.
+
+Удалить из текста все появления данного слова (но не как части другого слова!)
+
+Также удалить все лишние пробелы между словами и в начале и в конце строки.
+
+Тестовые данные
+Sample Input:
+
+A good    dog deserves a    good bone or goodness
+good
+Sample Output:
+
+A dog deserves a bone or goodness
+## решение
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String text = scan.nextLine();
+        String word = scan.next();
+        text = text.trim();
+        String[] words = text.split(" +"); //нужно группировать пробелы
+        String result = "";
+        for (String item:words) {
+            if (!item.equals(word)) {
+                result += item;
+                result += " ";
+            }
+        }
+        result = result.trim();
+        System.out.println(result);
+    }
+}
+```
+
+## задача
+Введите строку, состоящую из слов, отделенных ровно одним пробелом.
+
+Замените первую букву каждого слова на прописную. Выведите полученную строку.
+
+Тестовые данные
+Sample Input:
+
+one apple a day keeps a doctor away
+Sample Output:
+
+One Apple A Day Keeps A Doctor Away
+## решение
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        str=str.trim(); //удаляем пробелы в начале и в конце
+        String[] words = str.split(" "); //формируем массив слов без пробелов
+        for (int i = 0; i < words.length; i++) {
+            String s = words[i].substring(0,1).toUpperCase() + words[i].substring(1);
+            System.out.print(s+" ");
+        }
+    }
+}
+```
+
+## 5.2 Классы StringBuffer и StringBuilder
+
+**Классы  StringBuffer и  StringBuilder**
+Классы StringBuilder и StringBuffer по своему предназначению близки к классу String. При этом содержимое и размеры объектов классов StringBuilder и StringBuffer можно изменять.
+
+Основное отличие этих классов связано с использованием в многопоточных приложениях. StringBuffer обеспечивает потоко -безопасность, а StringBuilder – нет. При этом класс StringBuilder  дает более высокую скорость обработки. Его следует применять, если многопоточность не используется.
+
+Рассмотрим более подробно класс StringBuilder (класс StringBuffer полностью аналогичен).
+
+Объект класса  StringBuilder нельзя создавать с помощью строковых литералов, только с помощью операции new.
+```
+//StringBuilder sb = "test"; //ошибка
+StringBuilder sb1 = new StringBuilder("test");
+```
+В конструктор класса StringBuilder можно передать объект класса String, другой объект StringBuilder, а также целое число, которое означает емкость буфера символов.
+
+Дело в том, что "внутри" класса StringBuilder находится массив символов, который по мере необходимости автоматически увеличивается в размере. Количество зарезервированных под символы мест называется емкостью (capacity). Емкость всегда выделяется с некоторым запасом. Если создается StringBuilder конструктором по умолчанию (без параметров), то обычно резервируется емкость в 16 символов. 
+```
+StringBuilder sb2 = new StringBuilder(); //по умолчанию емкость 16
+StringBuilder sb3 = new StringBuilder(50); //емкость 50
+StringBuilder sb4 = new StringBuilder(sb1); //на основе другого StringBuilder
+```
+Объекты классов StringBuilder и String можно преобразовывать друг в друга.
+```
+String str = sb1.toString(); //преобразование в строку
+StringBuilder sb5 = new StringBuilder(str); //преобразование в StringBuilder
+```
+Текущую емкость объекта StringBuilder можно получить методом int capacity(), а текущую длину, т.е. фактическое количество символов - методом int length()
+```
+StringBuilder sb1 = new StringBuilder("test");
+System.out.println(sb1.capacity()); // выводит 20
+System.out.println(sb1.length()); //выводит 4
+```
+Изменить минимальную емкость объекта StringBuilder можно методом 
+```
+void ensureCapacity(int minimum). При этом это именно минимальная емкость, а текущая емкость может оказаться и больше.
+```
+```
+StringBuilder sb2 = new StringBuilder(); //по умолчанию емкость 16 
+System.out.println(sb2.capacity()); //выводит 16
+sb2.ensureCapacity(32);
+System.out.println(sb2.capacity()); //выводит 34
+```
+Текущую длину строки тоже можно изменить методом void setLength(int length). Однако с этим методом нужно быть очень осторожным. Если существующая длина строки больше указанной в методе, то он обрежет строку до нужного размера. А если текущая длина строки меньше заданной - то дополнит непечатаемыми символами.
+```
+StringBuilder sb1 = new StringBuilder("test");
+sb1.setLength(20);
+System.out.println(sb1);
+Выведется: 
+```
+
+
+ **Сравнение объектов StringBuilder**
+Для класса StringBuilder не переопределен метод equals(), т. е. сравнить его помощью содержимое двух объектов невозможно. При идентичном содержимом размеры буфера каждого могут отличаться, поэтому их сравнение на равенство будет неоднозначным. Метод equals() в классе StringBuilder есть (он есть в любом классе), но он сравнивает сами ссылочные переменные, т.е. его использование ничем не будет отличаться от проверки на равенство:
+```
+StringBuilder s1 = new StringBuilder("Java");
+StringBuilder s2 = new StringBuilder("Java");
+System.out.println( s1 == s2); //false, т.к. разные ссылочные переменные
+System.out.println(s1.equals(s2)); //тоже false, т.к. метод equals()
+//также сравнивает ссылочные переменные
+s2 = s1; //ссылки теперь одинаковые
+System.out.println(s1 == s2); //true
+System.out.println(s1.equals(s2)); //true
+```
+Как же проверить на равенство содержимое двух объектов StringBuilder ??  Для этого можно один из них преобразовать в строку  методом  toString(), а затем использовать метод  contentEquals() класса String для проверки на равенство содержимого строки и второго объекта StringBuilder:
+```
+StringBuffer s1 = new StringBuffer("Java");
+StringBuffer s2 = new StringBuffer("Java");
+System.out.println(str1.toString().contentEquals(str2)); //true
+```
+Что касается метода compareTo() в классе StringBuilder, то он работает так, как ожидается. Поэтому  для объектов s1 и s2 из предыдущего примера результат этого метода будет 0:
+```
+System.out.println(s1.compareTo(s2)==0); //true
+```
+Также существование метода compareTo() означает, что объекты StringBuilder можно сортировать:
+```
+StringBuilder[] list = {new StringBuilder("Tom"), new StringBuilder("Andrew"),
+         new StringBuilder("Max")};
+Arrays.sort(list);
+for (int i = 0; i < list.length; i++) {
+    System.out.print(list[i] + " ");
+}
+Выводится:  Andrew Max Tom 
+```
+**Методы класса**  **StringBuilder**
+Методы этого класса изменяют сам объект StringBuilder, а не создают новый!
+
+StringBuilder append(String str) — добавление к содержимому объекта строкового представления аргумента. Возвращает ссылку на этот же объект. Параметром может быть не только строка, но и значение любого другого типа, который автоматически преобразуется в строку
+```
+StringBuilder sb = new StringBuilder("test"); // создание объекта
+sb.append('-').append("test"); // добавление значений цепочкой
+sb.append(1); // добавление строки, полученную преобр.-ем числа
+System.out.println(sb);
+Результат: test-test1
+```
+
+Обратите внимание, что ссылочной переменной sb не нужно ничего присваивать (как мы делали в случае с классом String)!
+```
+StringBuilder insert(int offset, String str) — вставка символа, объекта или строки в указанную позицию;
+StringBuilder sbb = new StringBuilder("I java!");
+sbb.insert(2, "love "); // 2 - индекс символа,
+// начиная с которого будет вставлена строк
+sbb.insert(0,100);
+sbb.insert(3,"% ");
+System.out.println(sbb.toString());
+Результат:     100% I love java!
+```
+```
+StringBuilder deleteCharAt(int index) — удаление символа;
+StringBuider delete(int start, int end) — удаление подстроки от индекса start до индекса end (не включая);
+StringBuilder phrases = new StringBuilder("I do not like java!");
+phrases.delete(2, 9);
+System.out.println(phrases);
+Результат: I like java!
+```
+```
+StringBuilder reverse() — изменение порядка символов на обратный.
+StringBuilder st = new StringBuilder("palindrome");
+st.reverse();
+System.out.println(st);
+Результат: emordnilap
+```
+В классе StringBuilder присутствуют также методы, аналогичные методам класса String, такие как replace(), substring(), charAt(), length(), getChars(), indexOf() и др.
+
+Есть некоторые особенности использования этих методов, в отличие от класса String. Например, в метод indexOf() нельзя передать символ, а только строку:
+```
+StringBuilder test = new StringBuilder("abracadabra");
+//int ind = test.indexOf('c'); //ошибка
+int ind = test.indexOf("c");
+System.out.println(ind); //выводит 4
+```
+Другой пример - метод substring() возвращает не StringBuilder (как можно было бы подумать), а String:
+```
+//StringBuilder tt = test.substring(4,9); //ошибка
+String tt = test.substring(4,9);
+System.out.println(tt); //ввводит cadab
+```
+А метод replace() вообще работает по-другому: 
+```
+StringBuilder test = new StringBuilder("abracadabra");
+test.replace(2,5,"XX"); //с индекса 2 по 4 включительно
+//заменяется на XX
+System.out.println(test); //выводит abXXadabra
+```
+Таким образом, при использовании этих методов нужно обращаться к документации, либо пользоваться подсказками, которые дает Intellij Idea!
+
+Если в цикле  мы делаем конкатенацию строк  типа  String  операцией + , то это может привести к проблемам с производительностью. Ведь постоянно создаются новые строки, а старые какое-то время занимают память (пока их не уберет сборщик мусора).  В такой ситуации предпочтительнее использовать объект класса StringBuilder.
+
+Пример. С консоли вводится строка, содержащая несколько слов, разделенных пробелами. Пробелы могут быть также перед первым и после последнего слова. Нужно удалить лишние пробелы в начале и в конце строки, а между словами оставить ровно один пробел.
+```
+import java.util.Scanner;
+
+public class Example5 {
+    public static void main(String[] args) {
+        String data;
+        System.out.println("Введите исходную строку");
+        Scanner scan = new Scanner(System.in);
+        data = scan.nextLine();
+        data = data.trim();//удаление пробелов в начале и в конце
+        String[] words = data.split(" +"); //разделение на слова
+        // собрать из слов строку с одним пробелом между
+        StringBuilder sb = new StringBuilder(words[0]);
+        for(int i = 1; i < words.length; i++) {
+            sb.append(" ").append(words[i]);
+        }
+        System.out.println("|" + sb.toString() + "|");// можно просто sb -
+        // преобразование в строку будет автоматически
+    }
+}
+```
+И последнее, что хотелось бы упомянуть: с осторожностью используйте ссылочные переменные типа StringBuilder, которые указывают на один и тот же объект! Ведь  если Вы изменяете этот объект, пользуясь одной ссылкой, то результат получаете и по другой ссылке  тоже:
+```
+StringBuilder ex1 = new StringBuilder("Java");
+StringBuilder ex2 = ex1;
+ex2.append(" International");
+System.out.println(ex1); //выводит Java International
+```
+## задачка
+Пользователь вводит строку из слов, разделенных пробелами.  Заменить все слова, которые содержат букву z на слово "ERROR". Также удалить все лишние пробелы в начале и в конце строки. Между словами оставить ровно один пробел. 
+
+Тестовые данные
+Sample Input:
+
+   mama   zlobno   myla    puzzle  and    ramy   
+Sample Output:
+
+mama ERROR myla ERROR and ramy
+## решение
+```
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        String data;
+        Scanner scan = new Scanner(System.in);
+        data = scan.nextLine();
+        data = data.trim();//удаление пробелов в начале и в конце
+        String[] words = data.split(" +"); //разделение на слова
+        // собрать из слов строку с одним пробелом между
+        StringBuilder sb = new StringBuilder(words[0]);
+        for(int i = 1; i < words.length; i++) {
+            if (words[i].contains("z")){
+                sb.append(" ").append("ERROR");
+            } else {
+                sb.append(" ").append(words[i]);
+            }
+        }
+        System.out.println(sb.toString().trim());// можно просто sb -
+        // преобразование в строку будет автоматически
+    }
+}
+```
+автора
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        String[] words = str.split(" +");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].indexOf('z') != -1) {
+                sb.append(" ERROR");
+            } else {
+                sb.append(" ").append(words[i]);
+            }
+        }
+        System.out.println(sb);
+
+    }
+}
+```
+## задачка
+Пользователь вводит строку из слов, разделенных одним пробелом. Переставить слова местами так, чтобы каждое следующее слово начиналось с буквы, которой заканчивается предыдущее слово (существование такого слова в тестах гарантируется).
+
+Тестовые данные
+Sample Input:
+
+trolli emodji road tiger dog insert game
+Sample Output:
+
+trolli insert tiger road dog game emodji
+## решение
+
+```
+
+```
+
+## задачка
+## решение
+
+```
+
+```
+
+## задачка
+## решение
+
+```
+
+```
