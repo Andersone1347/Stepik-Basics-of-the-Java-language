@@ -3144,21 +3144,143 @@ Sample Output:
 
 trolli insert tiger road dog game emodji
 ## решение
-
+автора
 ```
+import java.util.Scanner;
 
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        String[] words = str.split(" +");
+        StringBuilder sb = new StringBuilder(words[0]);
+        for (int i = 1; i < words.length; i++) {
+            char simb = sb.charAt(sb.length() - 1);
+            for (int j = 1; j < words.length; j++) {
+                if(words[j].charAt(0) == simb){
+                    sb.append(" ").append(words[j]);
+                    break;
+                }
+            }
+         }
+         System.out.println(sb);
+    }
+}
 ```
 
 ## задачка
+Напишите метод primer(), который принимает два целых числа и возвращает строку, представляющую собой пример на сложение (см. тест). Используйте для формирования результата StringBuilder!
+
+Исходный код метода main менять нельзя!
+
+Тестовые данные
+Sample Input:
+
+8 11
+Sample Output:
+
+8 + 11 = 19
 ## решение
 
 ```
+import java.util.Scanner;
 
+    class Testing {
+        public static void main(String[] args) {
+            Scanner scan = new Scanner(System.in);
+            int a = scan.nextInt();
+            int b = scan.nextInt();
+            String str = primer(a, b);
+            System.out.println(str);
+        }
+        public static String primer(int a, int b){
+            StringBuilder q = new StringBuilder();
+            q.append(a).append(" + ").append(b).append(" = ").append(a+b);
+            String s = q.toString();
+            return s;
+        }
+}
 ```
 
 ## задачка
-## решение
+Пользователь вводит строку, в которой среди других символов содержатся символы цифр. Сформируйте строку, которая "представляет" сумму этих цифр. Выведите полученную строку на консоль. 
 
+Если в исходной строке цифр нет, то должно быть выведено ERROR.
+
+Р.S.  Преобразовать символ в число можно вычитанием кода символа '0'
+
+Тестовые данные
+Sample Input:
+
+ab34c#5i02k tolkien25
+Sample Output:
+
+3+4+5+0+2+2+5=21
+## решение
+моё
+```
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        StringBuilder myNumbers = new StringBuilder();
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (Character.isDigit(str.charAt(i))) {
+                myNumbers.append(str.charAt(i));
+            }
+        }
+        if (myNumbers.isEmpty()) {
+            System.out.println("ERROR");
+        } else {
+            String my = myNumbers.toString();
+            String[] arr = my.split("");
+            StringBuilder alfa = new StringBuilder();
+            for (int i = 0; i < arr.length; i++) {
+                int j = myNumbers.length() - 1;
+                count += Integer.parseInt(arr[i]);
+                if (j == i) {
+                    alfa.append(arr[i]);
+                } else {
+                    alfa.append(arr[i]).append("+");
+                }
+            }
+
+            alfa.append("=").append(count);
+
+            System.out.println(alfa);
+        }
+    }
+}
 ```
 
+автора
+```
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String str = scan.nextLine();
+        StringBuilder result = new StringBuilder();
+        int summa = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) >= '0' &&  str.charAt(i) <= '9'){
+                summa += str.charAt(i) - '0';
+                result.append(str.charAt(i)).append('+');
+            }
+        }
+        if (!result.isEmpty()) {
+            result.replace(result.length() - 1, result.length(), "=");
+            result.append(summa);
+            System.out.println(result);
+        } else {
+            System.out.println("ERROR");
+        }
+    }
+
+}
 ```
